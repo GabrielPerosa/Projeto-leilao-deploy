@@ -16,55 +16,60 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Pagamento {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@NotNull
-	private BigDecimal valor;
+    @NotNull
+    private BigDecimal valor;
 
-	@NotNull
-	private LocalDate vencimento;
+    @NotNull
+    private LocalDate vencimento;
 
-	@OneToOne(fetch = FetchType.EAGER)
-	private Usuario usuario;
+    @OneToOne(fetch = FetchType.EAGER)
+    private Usuario usuario;
 
-	@ManyToOne
-	@JoinColumn(nullable = false)
-	private Leilao leilao;
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Leilao leilao;
 
-	private Boolean pago;
+    private Boolean pago;
 
-	public Pagamento(Lance lanceVencedor, LocalDate vencimento) {
-		this.leilao = lanceVencedor.getLeilao();
-		this.usuario = lanceVencedor.getUsuario();
-		this.valor = lanceVencedor.getValor();
-		this.vencimento = vencimento;
-		this.pago = false;
-	}
+    // Construtor sem argumentos (necessário para o Hibernate)
+    public Pagamento() {
+    }
 
-	public Long getId() {
-		return id;
-	}
+    // Construtor com argumentos (já existente, para criação do objeto)
+    public Pagamento(Lance lanceVencedor, LocalDate vencimento) {
+        this.leilao = lanceVencedor.getLeilao();
+        this.usuario = lanceVencedor.getUsuario();
+        this.valor = lanceVencedor.getValor();
+        this.vencimento = vencimento;
+        this.pago = false;
+    }
 
-	public BigDecimal getValor() {
-		return valor;
-	}
+    // Getters e setters
+    public Long getId() {
+        return id;
+    }
 
-	public LocalDate getVencimento() {
-		return vencimento;
-	}
+    public BigDecimal getValor() {
+        return valor;
+    }
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
+    public LocalDate getVencimento() {
+        return vencimento;
+    }
 
-	public Leilao getLeilao() {
-		return leilao;
-	}
+    public Usuario getUsuario() {
+        return usuario;
+    }
 
-	public Boolean getPago() {
-		return pago;
-	}
+    public Leilao getLeilao() {
+        return leilao;
+    }
 
+    public Boolean getPago() {
+        return pago;
+    }
 }
